@@ -30,7 +30,7 @@ Open **http://localhost:8899**.
 Or with Docker:
 
 ```bash
-# After step git clone https://github.com/depldt/reclip-fork-averygan.git
+# After steps 'git clone https://github.com/depldt/reclip-fork-averygan.git' and 'cd reclip-fork-averygan'
 docker build -t reclip . && docker run -p 8899:8899 reclip
 ```
 
