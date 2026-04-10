@@ -3,78 +3,122 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>ReClip — Free Media Downloader</title>
-  <link rel="icon" href="/static/favicon.svg" type="image/svg+xml">
+  <title>VAMBEAR</title>
+  <link rel="icon" href="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCA2NCA2NCI+PHJlY3Qgd2lkdGg9IjY0IiBoZWlnaHQ9IjY0IiByeD0iMTIiIGZpbGw9IiMwMDAiLz48dGV4dCB4PSI1MCUiIHk9IjU1JSIgdGV4dC1hbmNob3I9Im1pZGRsZSIgZG9taW5hbnQtYmFzZWxpbmU9Im1pZGRsZSIgZm9udC1mYW1pbHk9IkFyaWFsLCBzYW5zLXNlcmlmIiBmb250LXNpemU9IjMwIiBmb250LXdlaWdodD0iNzAwIiBmaWxsPSIjRDBGNkY3Ij5WQjwvdGV4dD48L3N2Zz4=" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Jura:wght@300;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --bg: #f4f1eb;
-      --fg: #3a3a38;
-      --accent: #e85d2a;
-      --accent-hover: #d04e1f;
-      --muted: #9c9889;
-      --card: #fff;
-      --card-border: #e2ded6;
-      --success: #2d8a4e;
-      --error: #c43d3d;
+      --bg: #000000;
+      --fg: #D0F6F7;
+      --accent: #D0F6F7;
+      --accent-hover: #a8e6e7;
+      --muted: #6b8a8b;
+      --card: #0a0a0a;
+      --card-border: #1a2a2b;
+      --success: #4ade80;
+      --error: #f87171;
       --radius: 14px;
-      --shimmer: linear-gradient(90deg, #ebe8e2 25%, #f0ede7 50%, #ebe8e2 75%);
+      --shimmer: linear-gradient(90deg, #0a0a0a 25%, #111 50%, #0a0a0a 75%);
+      --logo-shift-x: -40px;
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
 
     body {
-      font-family: 'DM Mono', monospace;
+      font-family: 'Rajdhani', sans-serif;
       background: var(--bg);
       color: var(--fg);
       min-height: 100vh;
       overflow-x: hidden;
+      /* Жёсткое центрирование по обеим осям */
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center; /* Фоллбэк для всех дочерних элементов */
     }
 
     body::after {
       content: '';
       position: fixed;
       inset: 0;
-      opacity: 0.03;
+      opacity: 0.06;
       pointer-events: none;
       background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E");
       background-size: 128px;
+      z-index: -1;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: 620px;
+      padding: 0 24px;
+      margin: 0 auto;
     }
 
     .page {
-      max-width: 620px;
-      margin: 0 auto;
-      padding: 60px 24px 80px;
+      width: 100%;
+      padding: 0 0 80px;
+      /* Гарантируем центрирование содержимого по X */
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
-    .brand { margin-bottom: 48px; }
-    .brand h1 {
-      font-family: 'Instrument Serif', serif;
-      font-size: 4.2rem;
-      font-weight: 400;
-      letter-spacing: -0.03em;
-      line-height: 1;
-      color: var(--fg);
+    .brand {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+      margin: 60px 0 48px;
     }
-    .brand h1 em { font-style: italic; color: var(--accent); }
-    .brand p {
-      margin-top: 10px;
-      font-size: 0.78rem;
-      color: var(--muted);
-      letter-spacing: 0.04em;
+    .brand-inner {
+      width: 100%;
+      text-align: center;
+    }
+    .brand h1 {
+      font-family: 'Jura', sans-serif;
+      font-size: 102px;
+      font-weight: 900;
+      letter-spacing: 30px;
+      line-height: 1;
       text-transform: uppercase;
+      /* Градиентный текст */
+      background: linear-gradient(to bottom, #D0F6F7 45%, #000000 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      color: #D0F6F7; /* Fallback */
+      display: inline-block;
+      margin: 0; /* Центрируется через .brand-inner */
+      transform: translateX(var(--logo-shift-x));
+    }
+    .brand h1 em { 
+      font-style: normal; 
+      -webkit-text-fill-color: transparent; 
+      color: #D0F6F7;
+    }
+    .brand p {
+      margin-top: 16px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      color: var(--fg);
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0.9;
     }
 
     textarea {
       width: 100%;
+      max-width: 100%;
       padding: 18px 20px;
       border: 1.5px solid var(--card-border);
       border-radius: var(--radius);
       background: var(--card);
       color: var(--fg);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.88rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 500;
       outline: none;
       resize: none;
       min-height: 56px;
@@ -83,15 +127,21 @@
     }
     textarea:focus {
       border-color: var(--accent);
-      box-shadow: 0 0 0 3px rgba(232, 93, 42, 0.08);
+      box-shadow: 0 0 0 3px rgba(208, 246, 247, 0.15);
     }
-    textarea::placeholder { color: var(--muted); }
+    textarea::placeholder { 
+      color: var(--muted);
+      font-weight: 500;
+    }
 
     .hint {
-      font-size: 0.7rem;
+      font-size: 0.9rem;
       color: var(--muted);
       margin-bottom: 20px;
       letter-spacing: 0.02em;
+      font-weight: 500;
+      width: 100%;
+      text-align: left; /* Подсказка остаётся слева для читаемости */
     }
 
     .controls {
@@ -99,6 +149,8 @@
       gap: 10px;
       margin-bottom: 6px;
       align-items: center;
+      width: 100%;
+      justify-content: center; /* Центрируем группу кнопок */
     }
     .pill-group {
       display: flex;
@@ -108,41 +160,61 @@
       background: var(--card);
     }
     .pill {
-      padding: 9px 18px;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.76rem;
+      padding: 10px 20px;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.9rem;
+      font-weight: 600;
       border: none;
       background: transparent;
       color: var(--muted);
       cursor: pointer;
       transition: all 0.2s;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-    .pill.active { background: var(--fg); color: var(--bg); }
-    .pill:not(.active):hover { color: var(--fg); }
+    .pill.active { 
+      background: var(--fg); 
+      color: var(--bg); 
+    }
+    .pill:not(.active):hover { 
+      color: var(--fg); 
+    }
 
     .fetch-btn {
       flex: 1;
-      padding: 10px 20px;
+      padding: 12px 24px;
       border: none;
       border-radius: 10px;
       background: var(--accent);
-      color: #fff;
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      font-weight: 500;
+      color: var(--bg);
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
       transition: background 0.2s, transform 0.1s;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .fetch-btn:hover { background: var(--accent-hover); }
-    .fetch-btn:active { transform: scale(0.98); }
-    .fetch-btn:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
+    .fetch-btn:hover { 
+      background: var(--accent-hover); 
+    }
+    .fetch-btn:active { 
+      transform: scale(0.98); 
+    }
+    .fetch-btn:disabled { 
+      opacity: 0.5; 
+      cursor: not-allowed; 
+      transform: none; 
+    }
 
     /* Cards */
-    .cards { margin-top: 24px; }
+    .cards { 
+      margin-top: 24px; 
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
 
     .card {
       display: flex;
@@ -152,6 +224,7 @@
       background: var(--card);
       padding: 14px;
       margin-bottom: 10px;
+      width: 100%;
       animation: slideUp 0.4s cubic-bezier(0.16, 1, 0.3, 1);
     }
     @keyframes slideUp {
@@ -175,7 +248,6 @@
       object-fit: cover;
       display: block;
     }
-    /* No-thumbnail icon */
     .card-thumb .no-thumb {
       width: 100%;
       height: 100%;
@@ -190,7 +262,6 @@
       opacity: 0.5;
     }
 
-    /* Shimmer skeleton for loading state */
     .card-thumb.loading {
       background: var(--shimmer);
       background-size: 200% 100%;
@@ -219,21 +290,23 @@
       justify-content: center;
     }
     .card-title {
-      font-family: 'Instrument Serif', serif;
-      font-size: 1rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1.15rem;
       line-height: 1.3;
       color: var(--fg);
       margin-bottom: 2px;
       overflow: hidden;
       text-overflow: ellipsis;
       white-space: nowrap;
+      font-weight: 600;
     }
     .card-meta {
-      font-size: 0.68rem;
+      font-size: 0.85rem;
       color: var(--muted);
       letter-spacing: 0.03em;
       text-transform: uppercase;
       margin-bottom: 8px;
+      font-weight: 500;
     }
 
     .card-actions {
@@ -244,54 +317,75 @@
     }
 
     .card-dl-btn {
-      padding: 6px 14px;
+      padding: 8px 16px;
       border: none;
       border-radius: 7px;
       background: var(--fg);
       color: var(--bg);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.7rem;
-      font-weight: 500;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
-      letter-spacing: 0.03em;
+      letter-spacing: 0.05em;
       text-transform: uppercase;
     }
-    .card-dl-btn:hover { background: #2d2d2a; }
-    .card-dl-btn:disabled { opacity: 0.4; cursor: not-allowed; }
-    .card-dl-btn.done { background: var(--success); color: #fff; }
-    .card-dl-btn.error { background: var(--error); color: #fff; }
+    .card-dl-btn:hover { 
+      background: var(--accent-hover); 
+    }
+    .card-dl-btn:disabled { 
+      opacity: 0.4; 
+      cursor: not-allowed; 
+    }
+    .card-dl-btn.done { 
+      background: var(--success); 
+      color: #000; 
+    }
+    .card-dl-btn.error { 
+      background: var(--error); 
+      color: #000; 
+    }
 
     .card-status {
-      font-size: 0.68rem;
+      font-size: 0.85rem;
       color: var(--muted);
+      font-weight: 500;
     }
-    .card-status.downloading { color: var(--accent); }
-    .card-status.done { color: var(--success); }
-    .card-status.error { color: var(--error); }
+    .card-status.downloading { 
+      color: var(--accent); 
+    }
+    .card-status.done { 
+      color: var(--success); 
+    }
+    .card-status.error { 
+      color: var(--error); 
+    }
 
     .q-chip {
-      padding: 4px 10px;
+      padding: 6px 12px;
       border: 1.5px solid var(--card-border);
       border-radius: 6px;
       background: transparent;
       color: var(--muted);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.65rem;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 0.8rem;
+      font-weight: 600;
       cursor: pointer;
       transition: all 0.2s;
     }
     .q-chip.active {
       border-color: var(--fg);
       color: var(--fg);
-      background: rgba(26,26,24,0.04);
+      background: rgba(208, 246, 247, 0.1);
     }
-    .q-chip:hover:not(.active) { border-color: var(--muted); }
+    .q-chip:hover:not(.active) { 
+      border-color: var(--muted); 
+    }
 
     /* Error card */
     .card.card-error {
-      border-color: rgba(196, 61, 61, 0.2);
-      background: rgba(196, 61, 61, 0.03);
+      border-color: rgba(248, 113, 113, 0.3);
+      background: rgba(248, 113, 113, 0.08);
     }
     .card-error-icon {
       width: 100%;
@@ -299,7 +393,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      background: rgba(196, 61, 61, 0.08);
+      background: rgba(248, 113, 113, 0.15);
       color: var(--error);
     }
     .card-error-icon svg {
@@ -307,16 +401,18 @@
       height: 24px;
     }
     .card-error-msg {
-      font-size: 0.72rem;
+      font-size: 0.9rem;
       color: var(--error);
       margin-top: 2px;
       line-height: 1.4;
+      font-weight: 500;
     }
     .card-error-url {
-      font-size: 0.65rem;
+      font-size: 0.8rem;
       color: var(--muted);
       word-break: break-all;
       margin-top: 4px;
+      font-weight: 500;
     }
 
     /* Download all bar */
@@ -324,28 +420,34 @@
       display: flex;
       gap: 10px;
       margin-top: 16px;
+      width: 100%;
     }
     .dl-all-btn {
       flex: 1;
-      padding: 12px;
+      padding: 14px 24px;
       border: none;
       border-radius: 10px;
       background: var(--fg);
       color: var(--bg);
-      font-family: 'DM Mono', monospace;
-      font-size: 0.82rem;
-      font-weight: 500;
+      font-family: 'Rajdhani', sans-serif;
+      font-size: 1rem;
+      font-weight: 700;
       cursor: pointer;
       transition: all 0.2s;
-      letter-spacing: 0.04em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
     }
-    .dl-all-btn:hover { background: #2d2d2a; }
-    .dl-all-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+    .dl-all-btn:hover { 
+      background: var(--accent-hover); 
+    }
+    .dl-all-btn:disabled { 
+      opacity: 0.4; 
+      cursor: not-allowed; 
+    }
 
     .spin {
       display: inline-block;
-      width: 10px; height: 10px;
+      width: 12px; height: 12px;
       border: 2px solid currentColor;
       border-right-color: transparent;
       border-radius: 50%;
@@ -357,17 +459,34 @@
     .footer {
       margin-top: 48px;
       text-align: center;
-      font-size: 0.68rem;
+      font-size: 0.85rem;
       color: var(--muted);
-      letter-spacing: 0.05em;
+      letter-spacing: 0.08em;
       text-transform: uppercase;
-      line-height: 1.8;
+      line-height: 2;
+      font-weight: 500;
+      width: 100%;
     }
 
     /* Mobile */
     @media (max-width: 500px) {
-      .brand h1 { font-size: 3rem; }
-      .page { padding: 40px 16px 60px; }
+      .brand h1 { 
+        font-size: 64px; 
+        letter-spacing: 15px;
+        transform: none;
+      }
+      .brand p {
+        font-size: 0.95rem;
+      }
+      .shell {
+        padding: 0 16px;
+      }
+      .brand {
+        margin-top: 40px;
+      }
+      .page { 
+        padding: 0 0 60px; 
+      }
       .card { flex-direction: column; gap: 10px; }
       .card-thumb {
         width: 100%;
@@ -375,27 +494,31 @@
         height: 160px;
       }
       .card-title { white-space: normal; }
-      .controls { flex-wrap: wrap; }
+      .controls { flex-wrap: wrap; justify-content: center; }
       .fetch-btn { width: 100%; }
     }
   </style>
 </head>
 <body>
-  <div class="page">
-    <div class="brand">
-      <h1>Re<em>Clip</em></h1>
-      <p>Free media downloader</p>
+  <div class="shell">
+  <div class="brand">
+    <div class="brand-inner">
+      <h1>VAMBEAR</h1>
+      <p>Kostenloser Medien-Downloader</p>
     </div>
+  </div>
 
-    <textarea id="urls" placeholder="Paste one or more URLs..." rows="2"></textarea>
-    <p class="hint">Multiple links? Separate with spaces, commas, or newlines.</p>
+  <div class="page">
+
+    <textarea id="urls" placeholder="Fügen Sie eine oder mehrere URLs ein..." rows="2"></textarea>
+    <p class="hint">Mehrere Links? Durch Leerzeichen, Kommas oder Zeilenumbrüche trennen.</p>
 
     <div class="controls">
       <div class="pill-group">
         <button class="pill active" data-format="video" onclick="setFormat(this)">MP4</button>
         <button class="pill" data-format="audio" onclick="setFormat(this)">MP3</button>
       </div>
-      <button class="fetch-btn" id="goBtn" onclick="go()">Fetch</button>
+      <button class="fetch-btn" id="goBtn" onclick="go()">LAUFEN</button>
     </div>
 
     <div id="cards" class="cards"></div>
@@ -405,6 +528,7 @@
       Vimeo &middot; Twitch &middot; Dailymotion &middot; SoundCloud &middot; Loom &middot; Streamable<br>
       Pinterest &middot; Tumblr &middot; Threads &middot; LinkedIn &middot; 1000+ more
     </div>
+  </div>
   </div>
 
   <script>
