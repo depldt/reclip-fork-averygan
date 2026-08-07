@@ -16,7 +16,7 @@ A self-hosted, open-source video and audio downloader with a clean web UI. Paste
 - Clean, responsive UI — no frameworks, no build step
 - Single Python file backend (~150 lines)
 
-## Quick Start
+## Quick start (Docker instructions below ↓↓↓)
 
 ```bash
 brew install yt-dlp ffmpeg    # or apt install ffmpeg && pip install yt-dlp
